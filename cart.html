@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="stylesheet" href="styles/cart.css" />
+  </head>
+  <body>
+    <div id="nav">
+      <div><a id="brand" href="home-page.html">Clothing Brand</a></div>
+      <div>
+        <a href="women-store.html">Women's Clothes</a>
+        <a href="men-store.html">Men's Clothes</a>
+        <a href="sales.html">Sales</a>
+      </div>
+      <div>
+        <a href="about-us.html">About Us</a>
+        <a href="form.html">Login</a>
+        <a href="help-center.html">Help Center</a>
+        <a href="cart.html">Cart</a>
+      </div>
+    </div>
+    <header>
+      <h1>Cart</h1>
+    </header>
+
+    <div id="order-completed" style="display: none">
+      <p>Your order has been completed!</p>
+      <span class="tick">✔️</span>
+      <a href="home-page.html" class="return-home-btn">Return to Home</a>
+    </div>
+
+    <main class="checkout-container">
+      <section class="checkout-details">
+        <form onsubmit="handleSubmit(event)">
+          <h2>Contact</h2>
+          <input type="email" id="email" placeholder="Email" required />
+
+          <h2>Delivery</h2>
+          <select id="country" required>
+            <option value="">Country/Region</option>
+            <option value="albania">Albania</option>
+            <option value="uk">United Kingdom</option>
+            <option value="italy">Italy</option>
+          </select>
+          <input type="text" id="firstname" placeholder="First name" required />
+          <input type="text" id="lastname" placeholder="Last name" required />
+          <input type="text" id="address" placeholder="Address" required />
+          <input
+            type="text"
+            id="apartment"
+            placeholder="Apartment, suite, etc. (optional)"
+          />
+          <input type="text" id="city" placeholder="City" required />
+          <input type="text" id="postal" placeholder="Postal code (optional)" />
+
+          <h2>Payment Details</h2>
+          <input
+            type="text"
+            id="cardholder-name"
+            placeholder="Cardholder Name"
+            required
+          />
+          <input
+            type="text"
+            id="card-number"
+            placeholder="Card Number"
+            required
+          />
+          <input type="text" id="cvv" placeholder="CVV" required />
+
+          <button type="submit" class="checkout-btn">
+            Proceed to Checkout
+          </button>
+        </form>
+      </section>
+
+      <section class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="cart-item">
+          <img src="foto/Geri/s5.webp" alt="Product Image" />
+          <div class="item-details">
+            <h3>T-Shirt</h3>
+            <p class="price">$80.00</p>
+          </div>
+          <button class="remove-item">Remove</button>
+        </div>
+        <div class="cart-item">
+          <img src="foto/Geri/s3.webp" alt="Product Image" />
+          <div class="item-details">
+            <h3>Winter Jacket</h3>
+            <p class="price">$90.00</p>
+          </div>
+          <button class="remove-item">Remove</button>
+        </div>
+
+        <div class="cart-total">
+          <p>Subtotal - 2 items <span id="subtotal">$170.00</span></p>
+          <p>Shipping <span>FREE</span></p>
+          <p class="total">Total <span id="total-price">$170.00</span></p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const removeButtons = document.querySelectorAll(".remove-item");
+      removeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          button.parentElement.remove();
+          updateSubtotal();
+        });
+      });
+
+      function updateSubtotal() {
+        const items = document.querySelectorAll(".cart-item");
+        let subtotal = 0;
+        items.forEach((item) => {
+          const price = parseFloat(
+            item
+              .querySelector(".price")
+              .textContent.replace("$", "")
+              .trim()
+              .replace(",", "")
+          );
+          subtotal += price;
+        });
+        document.getElementById(
+          "subtotal"
+        ).textContent = `ALL ${subtotal.toFixed(2)}`;
+        document.getElementById(
+          "total-price"
+        ).textContent = `ALL ${subtotal.toFixed(2)}`;
+      }
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+
+        let isValid = false;
+        const requiredFields = document.querySelectorAll(
+          "input[required], select[required]"
+        );
+
+        requiredFields.forEach((field) => {
+          if (!field.value) {
+            field.style.border = "2px solid red";
+          } else {
+            field.style.border = "1px solid #ddd";
+            isValid = true;
+          }
+        });
+
+        if (isValid) {
+          document.querySelector(".checkout-container").style.display = "none";
+          let completed = document.getElementById("order-completed")
+          completed.style.display = "flex";
+          completed.classList.add('order-completed') 
+        }
+      };
+    </script>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-content">
+          <p class="footer-copyright">© 2025 FitGear. All rights reserved.</p>
+          <p class="footer-links">
+            <a href="privacy-policy.html" target="_blank" class="footer-link">Privacy Policy</a>
+            <a href="help-center.html" target="_blank" class="footer-link">Help Center</a>
+            <a href="about-us.html" target="_blank" class="footer-link">About Us</a>
+            <a href="FAQ.html" target="_blank" class="footer-link">FAQ</a>
+          </p>
+          <div class="footer-social">
+            <a href="https://facebook.com" target="_blank" class="social-link">
+              <img
+                src="foto/Rejsi//facebook-icon.webp"
+                alt="Facebook"
+                class="social-icon"
+              />
+            </a>
+            <a href="https://twitter.com" target="_blank" class="social-link">
+              <img
+                src="foto/Rejsi//Twitter-Logo.png"
+                alt="Twitter"
+                class="social-icon"
+              />
+            </a>
+            <a href="https://instagram.com" target="_blank" class="social-link">
+              <img
+                src="foto/Rejsi/instagram-logo.webp"
+                alt="Instagram"
+                class="social-icon"
+              />
+            </a>
+          </div>
+
+          <div class="newsletter">
+            <h2 class="newsletter-heading">Subscribe to Our Newsletter</h2>
+            <form id="newsletterForm">
+              <input
+                type="email"
+                id="newsletterEmail"
+                name="email"
+                required=""
+                placeholder="Enter your email"
+              />
+              <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+            <div class="newsletter-success" style="display: none">
+              Thank you for subscribing!
+            </div>
+          </div>
+
+          <div class="contact-info">
+            <h2 class="contact-heading">Contact Information</h2>
+            <p>
+              Email:
+              <a href="mailto:support@website.com" class="footer-link"
+                >support@website.com</a
+              >
+            </p>
+            <p>
+              Phone:
+              <a href="tel:+1234567890" class="footer-link">+355 67 272 7000</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="map-container">
+          <h2 class="location">Our Location: Tirana East Gate</h2>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.6059670348895!2d19.876667015302267!3d41.28436147927374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350327b90eac927%3A0x5efdf7f457d4caa!2sTirana%20East%20Gate%20(TEG)!5e0!3m2!1sen!2sal!4v1698917695321!5m2!1sen!2sal"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
